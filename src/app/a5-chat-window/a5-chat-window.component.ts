@@ -14,28 +14,6 @@ export class A5ChatWindowComponent implements OnInit {
   lexRuntime: any;
   lexUserID = "Halbot" + Date.now();
   botOptionsTitle: string;
-  initialMenuOptions: Option[] = [
-    {
-      text: "Game Highlights",
-      value: "highlights"
-    },
-    {
-      text: "Player Stats",
-      value: "stats"
-    },
-    {
-      text: "Wrigley Field Map & Parking",
-      value: "park"
-    },
-    {
-      text: "Where's The Hotdog",
-      value: "food"
-    },
-    {
-      text: "Buy Tickets",
-      value: "tickets"
-    }
-  ];
   botMenuOptions: Option[] = [];
   faComment = faComment;
   greetingMessage = "How can we help you?";

@@ -21,14 +21,6 @@
     </div>
   </div>
   <div id="dialog-options">
-    <div class="main-menu-options" *ngIf="showMainMenuOptions">
-      <div class="main-menu-options-title">
-        <p>Here's some ideas:</p>
-      </div>
-      <div class="option-buttons-container">
-        <button value="{{option.value}}" *ngFor="let option of initialMenuOptions" (click)="chooseMainOption($event)">{{option.text}}</button>
-      </div>
-    </div>
     <!-- <div class="main-menu-button" *ngIf="showMainMenuButton">
       <div class="main-menu-btn-title">
         <p>Anything else?</p>
