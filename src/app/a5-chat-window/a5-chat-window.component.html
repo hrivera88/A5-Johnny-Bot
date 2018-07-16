@@ -4,15 +4,18 @@
     <div class="logo-container">
       <div class="logo-circle-border">
         <div class="logo-img-container">
-          <img src="../../assets/img/Johnny-Bot.png" alt="" class="logo-img">
+          <!-- <img src="../../assets/img/Johnny-Bot.png" alt="" class="logo-img"> -->
+          <div>
+            <lottie-animation-view [options]="lottieConfig"></lottie-animation-view>
+          </div>
         </div>
       </div>
     </div>
     <div class="brand-welcome-line">
       <div class="chat-icon">
-        <fa-icon [icon]="faComment"></fa-icon>
+        <fa-icon *ngIf="notMobileScreen" [icon]="faComment"></fa-icon>
       </div>
-      <p>Chatting with the Alive5's Johnny Bot!</p>
+      <p>Hi! I'm Johnny Bot with Alive5!</p>
     </div>
   </div>
   <div id="message-list">
@@ -27,7 +30,7 @@
       </div>
       <button value="main-menu-button" (click)="displayMainMenuOptions()">Menu</button>
     </div> -->
-    <div class="bot-menu-options" *ngIf="showBotOptions">
+    <div class="bot-menu-options" [@bounceMenu]="bounceMenu" *ngIf="showBotOptions">
       <div class="bot-option-title">
         <p>{{botOptionsTitle}}</p>
       </div>

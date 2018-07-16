@@ -89,6 +89,9 @@
 .logo-img-container img {
   width: 100%;
 }
+.logo-img-container div {
+  width: 100%;
+}
 .brand-welcome-line {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -115,6 +118,7 @@
 }
 #message-list {
   overflow: auto;
+  overflow-x: hidden;
   padding: 12px;
   -webkit-box-flex: 1;
   -ms-flex: 1 1 20%;
@@ -127,30 +131,7 @@
   -ms-flex-direction: column-reverse;
   flex-direction: column-reverse;
 }
-.main-menu-options,
-.main-menu-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  overflow-x: auto;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-overflow-scrolling: touch;
-  padding: 12px;
-  /* Lets it scroll lazy */
-}
+
 .bot-menu-options {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -243,9 +224,8 @@
   justify-content: center;
   width: 100%;
 }
-.cllass {
-  content: "";
-  height: 36px;
+.option-buttons-container button {
+  cursor: pointer;
 }
 /* typing indicator CSS based on code by Joseph Fusco -> https://codepen.io/fusco/pen/XbpaYv */
 .typing-indicator {

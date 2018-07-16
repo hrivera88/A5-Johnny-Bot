@@ -1,4 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  useAnimation
+} from "@angular/animations";
+import { bounceInAnimation } from "../animations";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { Message } from "./message";
 import { Option } from "./option";
@@ -8,7 +16,21 @@ import * as _ from "lodash";
 @Component({
   selector: "a5-chat-window",
   templateUrl: "./a5-chat-window.component.html",
-  styleUrls: ["./a5-chat-window.component.css"]
+  styleUrls: ["./a5-chat-window.component.css"],
+  animations: [
+    trigger("bounceMenu", [
+      state("botResponse", style({})),
+      state("button", style({})),
+      transition("* => *", [
+        useAnimation(bounceInAnimation, {
+          params: {
+            duration: "2s",
+            delay: "0ms"
+          }
+        })
+      ])
+    ])
+  ]
 })
 export class A5ChatWindowComponent implements OnInit {
   lexRuntime: any;
@@ -22,6 +44,9 @@ export class A5ChatWindowComponent implements OnInit {
   showMainMenuButton = false;
   showBotOptions = false;
   messages: Message[] = [];
+  lottieConfig: Object;
+  notMobileScreen = true;
+  bounceMenu: string;
 
   constructor() {
     AWS.config.region = "us-east-1";
@@ -29,10 +54,19 @@ export class A5ChatWindowComponent implements OnInit {
       IdentityPoolId: "us-east-1:21ece9e8-d2f1-4d74-9e3b-dbf9acd25e06"
     });
     this.lexRuntime = new AWS.LexRuntime();
+    this.lottieConfig = {
+      path: "../../assets/js/lottie/data.json",
+      autoplay: true,
+      loop: true
+    };
   }
 
   ngOnInit() {
     this.sendTextMessageToBot("hello");
+    console.log(screen.width);
+    if (screen.width < 768) {
+      this.notMobileScreen = false;
+    }
   }
 
   displayMainMenuOptions() {
@@ -89,6 +123,7 @@ export class A5ChatWindowComponent implements OnInit {
         botResponse.responseCard.genericAttachments[0].buttons
       );
       this.showBotOptions = true;
+      this.bounceMenu = "botResponse";
     } else {
       if (botResponse.responseCard) {
         //If the Bot response has a Response Card with Options show them in the UI
@@ -100,6 +135,7 @@ export class A5ChatWindowComponent implements OnInit {
         );
         this.showMainMenuOptions = false;
         this.showBotOptions = true;
+        this.bounceMenu = "botResponse";
       } else {
         this.showBotOptions = false;
         this.showMainMenuOptions = false;
@@ -139,6 +175,7 @@ export class A5ChatWindowComponent implements OnInit {
     let optionText = evt.target.value;
     this.showResponse(true, optionText);
     this.sendTextMessageToBot(optionText);
+    this.bounceMenu = "button";
   }
 
   chooseMainOption(evt: any) {
