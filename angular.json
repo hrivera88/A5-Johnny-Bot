@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "node-cubBot": {
+    "johnny5-bot": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,18 +13,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/node-cubBot",
+            "outputPath": "dist/johnny5-bot",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -50,18 +45,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "node-cubBot:build"
+            "browserTarget": "johnny5-bot:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "node-cubBot:build:production"
+              "browserTarget": "johnny5-bot:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "node-cubBot:build"
+            "browserTarget": "johnny5-bot:build"
           }
         },
         "test": {
@@ -71,31 +66,21 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css"],
             "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     },
-    "node-cubBot-e2e": {
+    "johnny5-bot-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +88,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "node-cubBot:serve"
+            "devServerTarget": "johnny5-bot:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "node-cubBot:serve:production"
+              "devServerTarget": "johnny5-bot:serve:production"
             }
           }
         },
@@ -115,13 +100,11 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }
   },
-  "defaultProject": "node-cubBot"
+  "defaultProject": "johnny5-bot"
 }

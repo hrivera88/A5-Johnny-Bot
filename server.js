@@ -24,10 +24,10 @@ const TOKEN_PATH = "token.json";
 // Serve only the static form the dist directory
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/dist/node-cubBot"));
+app.use(express.static(__dirname + "/dist/johnny5-bot"));
 
 app.get("/*", function(req, res) {
-  res.sendFile(__dirname + "/src/index.html");
+  res.sendFile(__dirname + "/dist/johnny5-bot/index.html");
 });
 app.post("/sendmail", (req, res) => {
   console.log("api call: ", req.body);
