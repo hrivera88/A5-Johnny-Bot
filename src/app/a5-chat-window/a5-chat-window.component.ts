@@ -12,6 +12,7 @@ import { Message } from "./message";
 import { Option } from "./option";
 import * as AWS from "aws-sdk";
 import * as _ from "lodash";
+import { SendMailService } from "../send-mail.service";
 
 @Component({
   selector: "a5-chat-window",
@@ -21,7 +22,7 @@ import * as _ from "lodash";
     trigger("bounceMenu", [
       state("botResponse", style({})),
       state("button", style({})),
-      transition("* => *", [
+      transition("void => *", [
         useAnimation(bounceInAnimation, {
           params: {
             duration: "2s",
@@ -30,7 +31,8 @@ import * as _ from "lodash";
         })
       ])
     ])
-  ]
+  ],
+  providers: [SendMailService]
 })
 export class A5ChatWindowComponent implements OnInit {
   lexRuntime: any;
@@ -47,8 +49,13 @@ export class A5ChatWindowComponent implements OnInit {
   lottieConfig: Object;
   notMobileScreen = true;
   bounceMenu: string;
+  botLeadEmailMsg = {
+    name: "",
+    email: "",
+    message: ""
+  };
 
-  constructor() {
+  constructor(private sendMailService: SendMailService) {
     AWS.config.region = "us-east-1";
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: "us-east-1:21ece9e8-d2f1-4d74-9e3b-dbf9acd25e06"
@@ -67,6 +74,17 @@ export class A5ChatWindowComponent implements OnInit {
     if (screen.width < 768) {
       this.notMobileScreen = false;
     }
+  }
+
+  sendMail(name, email, message) {
+    this.botLeadEmailMsg = {
+      name: name,
+      email: email,
+      message: message
+    };
+    this.sendMailService.sendMail(this.botLeadEmailMsg).subscribe(result => {
+      console.log(result);
+    });
   }
 
   displayMainMenuOptions() {
@@ -102,11 +120,23 @@ export class A5ChatWindowComponent implements OnInit {
     });
   }
 
+  checkBotIntent(botResponse) {
+    console.log(botResponse);
+    if (botResponse.intentName === "AskQuestion") {
+      let name = botResponse.slots.userName;
+      let email = botResponse.slots.userEmail;
+      let message = botResponse.slots.userQuestion;
+      console.log(botResponse.slots);
+      this.sendMail(name, email, message);
+    }
+  }
+
   showBotResponseToUser(botResponse) {
     //Display Bot's response to Chat UI
     this.showResponse(false, botResponse.message);
     //Check whether the Dialog is at the ending state or not.
     if (botResponse.dialogState !== "Fulfilled" && !botResponse.responseCard) {
+      console.log("RAWRWRWRWRWRW");
       this.showMainMenuButton = false;
       this.showBotOptions = false;
       this.showMainMenuOptions = false;
@@ -136,6 +166,7 @@ export class A5ChatWindowComponent implements OnInit {
         this.showMainMenuOptions = false;
         this.showBotOptions = true;
         this.bounceMenu = "botResponse";
+        this.checkBotIntent(botResponse);
       } else {
         this.showBotOptions = false;
         this.showMainMenuOptions = false;
